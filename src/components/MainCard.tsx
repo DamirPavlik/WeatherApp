@@ -1,67 +1,60 @@
-import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
-import Card from "./Card";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Form from "./Form";
-
-interface WeatherInfo {
-  location: {
-    name: string;
-    region: string;
-    country: string;
-    localtime: string;
-  };
-  current: {
-    temp_c: number;
-    condition: {
-      text: string;
-      icon: string;
-    };
-  };
-}
 
 const MainCard = () => {
   const [city, setCity] = useState<string>("");
-  const [data, setData] = useState<WeatherInfo>();
-  const [error, setError] = useState<string | null>("");
+  const [history, setHistory] = useState<string[]>(() => {
+    const storedHistory = localStorage.getItem("history");
+    return storedHistory ? JSON.parse(storedHistory) : [];
+  });
 
-  let getCurrentData = async (
-    city: string,
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    console.log(navigator.geolocation.getCurrentPosition);
+  const [searchData, setSearchData] = useState();
+
+  useEffect(() => {
+    localStorage.setItem("history", JSON.stringify(history));
+  }, [history]);
+
+  let handleChange = async (value: string) => {
+    setCity(value);
     try {
-      let res = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=8df62f99baa2477a803121335230212&q=${city}`
+      let response = await axios.get(
+        `http://api.weatherapi.com/v1/search.json?key=8df62f99baa2477a803121335230212&q=${city}`
       );
-      let data: WeatherInfo = res.data;
-      setData(data);
-      console.log(data);
-      setError(null);
-    } catch (error: any) {
-      setError(error.message);
-      setData(undefined);
-      if (error.request.status === 400) {
-        setError("This Country/City Doesn't Exist");
-      }
+      let data = response.data;
+      setSearchData(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
+  let redirectToPage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setHistory((prevState) => [...prevState, city]);
+    window.location.href = `/place/${city}`;
+  };
+
+  let handleSearchClick = (value: string) => {
+    setHistory((prevState) => [...prevState, value]);
+    window.location.href = `/place/${value}`;
+  };
+
+  let handleTest = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    console.log(history);
+    console.log(localStorage.getItem("history"));
+  };
+
   return (
-    <div className="card-wrapper">
-      <div
-        className="card"
-        style={{
-          background: data?.current.condition.icon.includes("day")
-            ? "url(src/assets/day.jpg)"
-            : data?.current.condition.icon.includes("night")
-            ? "url(src/assets/night.jpg)"
-            : "",
-        }}
-      >
-        <Form city={city} setCity={setCity} getCurrentData={getCurrentData} />
-        <Card data={data} error={error} />
-      </div>
+    <div className="">
+      <Form
+        city={city}
+        handleChange={handleChange}
+        redirectToPage={redirectToPage}
+        searchData={searchData}
+        handleSearchClick={handleSearchClick}
+      />
+      <button onClick={(e) => handleTest(e)}>test</button>
     </div>
   );
 };

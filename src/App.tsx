@@ -1,11 +1,11 @@
-import MainCard from './components/MainCard';
+import Layout from "./components/Layout";
 
 const App = () => {
   return (
     <>
-      <MainCard />
+      <Layout />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
