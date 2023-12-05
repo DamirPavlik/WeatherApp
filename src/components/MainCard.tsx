@@ -9,17 +9,17 @@ const MainCard = () => {
     return storedHistory ? JSON.parse(storedHistory) : [];
   });
 
-  const [searchData, setSearchData] = useState();
+  const [searchData, setSearchData] = useState<any[]>([]);
 
   useEffect(() => {
     localStorage.setItem("history", JSON.stringify(history));
   }, [history]);
 
-  let handleChange = async (value: string) => {
+  const handleChange = async (value: string) => {
     setCity(value);
     try {
       let response = await axios.get(
-        `http://api.weatherapi.com/v1/search.json?key=8df62f99baa2477a803121335230212&q=${city}`
+        `http://api.weatherapi.com/v1/search.json?key=8df62f99baa2477a803121335230212&q=${value}`
       );
       let data = response.data;
       setSearchData(data);
@@ -28,21 +28,15 @@ const MainCard = () => {
     }
   };
 
-  let redirectToPage = (e: React.FormEvent<HTMLFormElement>) => {
+  const redirectToPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setHistory((prevState) => [...prevState, city]);
     window.location.href = `/place/${city}`;
   };
 
-  let handleSearchClick = (value: string) => {
+  const handleSearchClick = (value: string) => {
     setHistory((prevState) => [...prevState, value]);
     window.location.href = `/place/${value}`;
-  };
-
-  let handleTest = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    console.log(history);
-    console.log(localStorage.getItem("history"));
   };
 
   return (
@@ -54,7 +48,6 @@ const MainCard = () => {
         searchData={searchData}
         handleSearchClick={handleSearchClick}
       />
-      <button onClick={(e) => handleTest(e)}>test</button>
     </div>
   );
 };
