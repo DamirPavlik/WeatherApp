@@ -30,12 +30,19 @@ const MainCard = () => {
 
   const redirectToPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setHistory((prevState) => [...prevState, city]);
+    // setHistory((prevState) => [...prevState, city]);
+    setHistory((prevState) => {
+      const uniqueArray = [...new Set([...prevState, city])];
+      return uniqueArray;
+    });
     window.location.href = `/place/${city}`;
   };
 
   const handleSearchClick = (value: string) => {
-    setHistory((prevState) => [...prevState, value]);
+    setHistory((prevState) => {
+      const uniqueArray = [...new Set([...prevState, value])];
+      return uniqueArray;
+    });
     window.location.href = `/place/${value}`;
   };
 

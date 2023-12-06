@@ -14,9 +14,22 @@ const History = () => {
     window.location.href = "/history";
     localStorage.clear();
   };
+
+  const handleRedirectHistory = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    item: string
+  ) => {
+    e.preventDefault();
+    window.location.href = `/place/${item}`;
+  };
+
   return (
     <>
-      <HistoryCard history={parsedHistory} handleClear={handleClear} />
+      <HistoryCard
+        history={parsedHistory}
+        handleClear={handleClear}
+        handleRedirectHistory={handleRedirectHistory}
+      />
     </>
   );
 };

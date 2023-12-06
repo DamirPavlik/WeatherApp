@@ -28,7 +28,7 @@ const PlaceDashboard = () => {
   Promise<void> => {
     try {
       let res = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=8df62f99baa2477a803121335230212&q=${slug}`
+        `http://api.weatherapi.com/v1/forecast.json?key=8df62f99baa2477a803121335230212&q=${slug}`
       );
       let currentData: WeatherInfo = res.data;
       setData(currentData);
