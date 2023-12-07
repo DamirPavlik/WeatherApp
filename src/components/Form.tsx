@@ -47,7 +47,7 @@ const Form: React.FC<FormData> = ({
             <div
               key={item.name}
               onClick={() => handleSearchClick(item.name)}
-              className="bg-[#eaecef] px-5 py-5 w-[88%]"
+              className="bg-[#eaecef] hover:bg-[#dcdfe3] transition-all duration-300 ease-linear px-5 py-5 w-[88%] cursor-pointer"
             >
               {item.name} - {item.country}
             </div>

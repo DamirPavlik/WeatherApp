@@ -12,10 +12,25 @@ interface WeatherInfo {
   };
   current: {
     temp_c: number;
+    is_day: number;
     condition: {
       text: string;
       icon: string;
     };
+  };
+  forecast: {
+    forecastday: Array<{
+      date: string;
+      day: {
+        avgtemp_c: number;
+        maxtemp_c: number;
+        mintemp_c: number;
+        hour: {
+          time: string;
+          temp_c: number;
+        }[];
+      };
+    }>;
   };
 }
 
@@ -28,7 +43,7 @@ const PlaceDashboard = () => {
   Promise<void> => {
     try {
       let res = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=8df62f99baa2477a803121335230212&q=${slug}`
+        `http://api.weatherapi.com/v1/forecast.json?key=8df62f99baa2477a803121335230212&q=${slug}&days=3`
       );
       let currentData: WeatherInfo = res.data;
       setData(currentData);
