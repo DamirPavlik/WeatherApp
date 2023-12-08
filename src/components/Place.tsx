@@ -1,3 +1,7 @@
+import CurrentWeather from "./CurrentWeather";
+import DailyForecast from "./DailyForecast";
+import HourlyForecast from "./HourlyForecast";
+
 interface WeatherInfo {
   location: {
     name: string;
@@ -34,54 +38,6 @@ interface Place {
   error: string | null;
 }
 
-const CurrentWeather = ({
-  location,
-  condition,
-  temp_c,
-  icon,
-}: WeatherInfo["current"]) => (
-  <div className="flex justify-between">
-    {location && condition && (
-      <div>
-        <h2 className="text-[30px] font-extrabold leading-none">
-          {location.name}
-        </h2>
-        <p className="text-slate-500 mb-24">{condition.text}</p>
-        <h2 className="text-[40px] font-extrabold leading-none">{temp_c}°</h2>
-      </div>
-    )}
-    {icon && <img src={icon} alt="" className="h-full" />}
-  </div>
-);
-
-const HourlyForecast = ({
-  hourlyData,
-}: {
-  hourlyData: WeatherInfo["forecast"]["forecastday"][0]["hour"];
-}) => (
-  <div>
-    {hourlyData.map((h, idx) => (
-      <div key={idx}>
-        {h.time}: {h.temp_c}°
-      </div>
-    ))}
-  </div>
-);
-
-const DailyForecast = ({
-  dailyData,
-}: {
-  dailyData: WeatherInfo["forecast"]["forecastday"];
-}) => (
-  <div className="col-span-5">
-    {dailyData.map((day, idx) => (
-      <div key={idx}>
-        {day.day.avgtemp_c} - {day.date}
-      </div>
-    ))}
-  </div>
-);
-
 const Place = ({ weatherData, error }: Place) => {
   let currentDate = new Date().toISOString().split("T")[0];
 
@@ -90,7 +46,12 @@ const Place = ({ weatherData, error }: Place) => {
       {weatherData ? (
         <div className="grid grid-cols-12 gap-4 p-[30px]">
           <div className="col-span-7">
-            <CurrentWeather {...weatherData.current} />
+            <CurrentWeather
+              location={weatherData.location}
+              condition={weatherData.current.condition}
+              temp_c={weatherData.current.temp_c}
+              icon={weatherData.current.condition.icon}
+            />
             <HourlyForecast
               hourlyData={
                 weatherData.forecast.forecastday.find(
