@@ -2,41 +2,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import Place from "../../components/Place";
-
-interface WeatherInfo {
-  location: {
-    name: string;
-    region: string;
-    country: string;
-    localtime: string;
-  };
-  current: {
-    temp_c: number;
-    is_day: number;
-    condition: {
-      text: string;
-      icon: string;
-    };
-  };
-  forecast: {
-    forecastday: Array<{
-      date: string;
-      day: {
-        avgtemp_c: number;
-        maxtemp_c: number;
-        mintemp_c: number;
-        condition: {
-          text: string;
-          icon: string;
-        };
-        hour: {
-          time: string;
-          temp_c: number;
-        }[];
-      };
-    }>;
-  };
-}
+import { WeatherInfo } from "../../types";
 
 const PlaceDashboard = () => {
   const { slug } = useParams();
@@ -51,7 +17,6 @@ const PlaceDashboard = () => {
       );
       let currentData: WeatherInfo = res.data;
       setData(currentData);
-      console.log(currentData);
       setError(null);
     } catch (error: any) {
       setError(error.message);

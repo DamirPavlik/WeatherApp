@@ -1,13 +1,5 @@
 import React, { Fragment } from "react";
-
-interface HistoryCard {
-  history: string[];
-  handleClear: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  handleRedirectHistory: (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    item: string
-  ) => void;
-}
+import { HistoryCard } from "../types";
 
 const HistoryCard: React.FC<HistoryCard> = ({
   history,

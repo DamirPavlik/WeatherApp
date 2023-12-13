@@ -1,46 +1,7 @@
 import CurrentWeather from "./CurrentWeather";
 import DailyForecast from "./DailyForecast";
 import HourlyForecast from "./HourlyForecast";
-
-interface WeatherInfo {
-  location: {
-    name: string;
-    region: string;
-    country: string;
-    localtime: string;
-  };
-  current: {
-    temp_c: number;
-    is_day: number;
-    condition: {
-      text: string;
-      icon: string;
-    };
-  };
-  forecast: {
-    forecastday: Array<{
-      date: string;
-      day: {
-        avgtemp_c: number;
-        maxtemp_c: number;
-        mintemp_c: number;
-        condition: {
-          text: string;
-          icon: string;
-        };
-        hour: {
-          time: string;
-          temp_c: number;
-        }[];
-      };
-    }>;
-  };
-}
-
-interface Place {
-  weatherData: WeatherInfo | undefined;
-  error: string | null;
-}
+import { WeatherInfo, Place } from "../types";
 
 const Place = ({ weatherData, error }: Place) => {
   let findHourlyData = (
