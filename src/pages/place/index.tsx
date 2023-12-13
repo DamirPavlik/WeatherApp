@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Place from "../components/Place";
+import { Fragment, useEffect, useState } from "react";
+import Place from "../../components/Place";
 
 interface WeatherInfo {
   location: {
@@ -25,6 +25,10 @@ interface WeatherInfo {
         avgtemp_c: number;
         maxtemp_c: number;
         mintemp_c: number;
+        condition: {
+          text: string;
+          icon: string;
+        };
         hour: {
           time: string;
           temp_c: number;
@@ -43,7 +47,7 @@ const PlaceDashboard = () => {
   Promise<void> => {
     try {
       let res = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=8df62f99baa2477a803121335230212&q=${slug}&days=3`
+        `http://api.weatherapi.com/v1/forecast.json?key=8df62f99baa2477a803121335230212&q=${slug}&days=7`
       );
       let currentData: WeatherInfo = res.data;
       setData(currentData);
@@ -63,9 +67,9 @@ const PlaceDashboard = () => {
   }, [slug]);
 
   return (
-    <>
+    <Fragment>
       <Place weatherData={data} error={error} />
-    </>
+    </Fragment>
   );
 };
 

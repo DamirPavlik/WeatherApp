@@ -1,4 +1,4 @@
-import MainCard from "../components/MainCard";
+import MainCard from "../../components/MainCard";
 
 const Home = () => {
   return <MainCard />;
