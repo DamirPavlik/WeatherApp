@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+
+interface SearchData {
+  id: number;
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  url: string;
+}
 
 type FormData = {
   city: string;
   redirectToPage: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (value: string) => void;
-  searchData: any;
-  handleSearchClick: (city: string) => void;
+  searchData: SearchData[];
+  handleSearchClick: (city: SearchData) => void;
 };
 
 const Form: React.FC<FormData> = ({
@@ -18,15 +28,11 @@ const Form: React.FC<FormData> = ({
   const [rounded, setRounded] = useState<boolean>(true);
 
   useEffect(() => {
-    if (searchData !== undefined && searchData.length > 0) {
-      setRounded(false);
-    } else {
-      setRounded(true);
-    }
+    setRounded(searchData.length > 0 ? false : true);
   }, [searchData]);
 
   return (
-    <>
+    <Fragment>
       <form onSubmit={(e) => redirectToPage(e)}>
         <div className="flex">
           <input
@@ -43,18 +49,18 @@ const Form: React.FC<FormData> = ({
           </button>
         </div>
         <div className="">
-          {searchData?.map((item: any) => (
+          {searchData?.map((item: SearchData) => (
             <div
-              key={item.name}
-              onClick={() => handleSearchClick(item.name)}
+              key={item.id}
+              onClick={() => handleSearchClick(item)}
               className="bg-[#eaecef] hover:bg-[#dcdfe3] transition-all duration-300 ease-linear px-5 py-5 w-[88%] cursor-pointer"
             >
-              {item.name} - {item.country}
+              {`${item.name} - ${item.country}`}
             </div>
           ))}
         </div>
       </form>
-    </>
+    </Fragment>
   );
 };
 

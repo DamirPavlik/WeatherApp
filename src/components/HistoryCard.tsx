@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 interface HistoryCard {
   history: string[];
@@ -15,9 +15,9 @@ const HistoryCard: React.FC<HistoryCard> = ({
   handleRedirectHistory,
 }) => {
   return (
-    <>
+    <Fragment>
       {history ? (
-        <>
+        <Fragment>
           {history.map((item, idx) => (
             <div
               className="w-100 p-4 bg-[#eaecef] hover:bg-[#dcdfe3] transition-all duration-300 ease-linear rounded-md drop-shadow-md mb-4 cursor-pointer"
@@ -35,11 +35,11 @@ const HistoryCard: React.FC<HistoryCard> = ({
               Clear All Data
             </button>
           </div>
-        </>
+        </Fragment>
       ) : (
         <div>No History To Show</div>
       )}
-    </>
+    </Fragment>
   );
 };
 

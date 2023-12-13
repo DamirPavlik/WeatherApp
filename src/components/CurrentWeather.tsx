@@ -20,6 +20,10 @@ interface WeatherInfo {
         avgtemp_c: number;
         maxtemp_c: number;
         mintemp_c: number;
+        condition: {
+          text: string;
+          icon: string;
+        };
         hour: {
           time: string;
           temp_c: number;
@@ -44,7 +48,7 @@ const CurrentWeather = ({
     {location && condition && (
       <div>
         <h2 className="text-[30px] font-extrabold leading-none">
-          {location.name}
+          {location.name} - {location.country}
         </h2>
         <p className="text-slate-500 mb-24">{condition.text}</p>
         <h2 className="text-[40px] font-extrabold leading-none">{temp_c}°</h2>
