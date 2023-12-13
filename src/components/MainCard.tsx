@@ -1,16 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import Form from "./Form";
-
-interface SearchData {
-  id: number;
-  name: string;
-  region: string;
-  country: string;
-  lat: number;
-  lon: number;
-  url: string;
-}
+import { SearchData } from "../types";
 
 const MainCard = () => {
   const [city, setCity] = useState<string>("");
@@ -20,10 +11,16 @@ const MainCard = () => {
   });
 
   const [searchData, setSearchData] = useState<SearchData[]>([]);
+  const [rounded, setRounded] = useState<boolean>(true);
+  const [idx, setIdx] = useState<number | null>(null);
 
   useEffect(() => {
     localStorage.setItem("history", JSON.stringify(history));
   }, [history]);
+
+  useEffect(() => {
+    setRounded(searchData.length > 0 ? false : true);
+  }, [searchData]);
 
   const handleChange = async (value: string) => {
     setCity(value);
@@ -31,7 +28,6 @@ const MainCard = () => {
 
     try {
       let response = await axios.get(apiUrl);
-      console.log(response.data);
       setSearchData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -51,6 +47,20 @@ const MainCard = () => {
     window.location.href = `/place/${value.url}`;
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      setIdx((prevIdx) =>
+        prevIdx === null ? 0 : Math.min(prevIdx + 1, searchData.length - 1)
+      );
+      console.log(idx);
+    } else if (e.key === "ArrowUp") {
+      setIdx((prevIdx) => (prevIdx === null ? 0 : Math.max(prevIdx - 1, 0)));
+    } else if (e.key === "Enter" && idx !== null) {
+      e.preventDefault();
+      handleSearchClick(searchData[idx]);
+    }
+  };
+
   return (
     <Fragment>
       <Form
@@ -59,6 +69,9 @@ const MainCard = () => {
         redirectToPage={redirectToPage}
         searchData={searchData}
         handleSearchClick={handleSearchClick}
+        rounded={rounded}
+        handleKeyPress={handleKeyPress}
+        idx={idx}
       />
     </Fragment>
   );
