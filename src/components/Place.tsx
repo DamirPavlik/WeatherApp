@@ -24,6 +24,10 @@ interface WeatherInfo {
         avgtemp_c: number;
         maxtemp_c: number;
         mintemp_c: number;
+        condition: {
+          text: string;
+          icon: string;
+        };
         hour: {
           time: string;
           temp_c: number;
@@ -39,12 +43,22 @@ interface Place {
 }
 
 const Place = ({ weatherData, error }: Place) => {
-  let currentDate = new Date().toISOString().split("T")[0];
+  let findHourlyData = (
+    weatherData: WeatherInfo | undefined
+  ): { time: string; temp_c: number }[] => {
+    const currentDate = new Date().toISOString().split("T")[0];
+    const hourlyData =
+      weatherData?.forecast.forecastday.find((day) => day.date === currentDate)
+        ?.day.hour || [];
+    return hourlyData as { time: string; temp_c: number }[];
+  };
+
+  const hourlyData = findHourlyData(weatherData);
 
   return (
     <div>
       {weatherData ? (
-        <div className="grid grid-cols-12 gap-4 p-[30px]">
+        <div className="grid grid-cols-12 content-center gap-4 p-[30px]">
           <div className="col-span-7">
             <CurrentWeather
               location={weatherData.location}
@@ -52,13 +66,7 @@ const Place = ({ weatherData, error }: Place) => {
               temp_c={weatherData.current.temp_c}
               icon={weatherData.current.condition.icon}
             />
-            <HourlyForecast
-              hourlyData={
-                weatherData.forecast.forecastday.find(
-                  (day) => day.date === currentDate
-                )?.day.hour || []
-              }
-            />
+            <HourlyForecast hourlyData={hourlyData} />
           </div>
           <DailyForecast dailyData={weatherData.forecast.forecastday} />
         </div>
