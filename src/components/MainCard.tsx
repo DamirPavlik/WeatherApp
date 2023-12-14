@@ -4,7 +4,7 @@ import Form from "./Form";
 
 import { SearchData } from "../types";
 
-const MainCard = () => {
+const MainCard: React.FC<{}> = () => {
   const [city, setCity] = useState<string>("");
   const [history, setHistory] = useState<string[]>(() => {
     const storedHistory = localStorage.getItem("history");
@@ -50,11 +50,12 @@ const MainCard = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "ArrowDown") {
+      e.preventDefault();
       setIdx((prevIdx) =>
         prevIdx === null ? 0 : Math.min(prevIdx + 1, searchData.length - 1)
       );
-      console.log(idx);
     } else if (e.key === "ArrowUp") {
+      e.preventDefault();
       setIdx((prevIdx) => (prevIdx === null ? 0 : Math.max(prevIdx - 1, 0)));
     } else if (e.key === "Enter" && idx !== null) {
       e.preventDefault();
