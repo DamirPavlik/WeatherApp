@@ -1,15 +1,11 @@
-import { WeatherInfo } from "../types";
+import React from "react";
+import { CurrentWeatherProps } from "../types";
 
-const CurrentWeather = ({
+const CurrentWeather: React.FC<CurrentWeatherProps> = ({
   location,
   condition,
   temp_c,
   icon,
-}: {
-  location: WeatherInfo["location"];
-  condition: WeatherInfo["current"]["condition"];
-  temp_c: number;
-  icon: string;
 }) => (
   <div className="flex justify-between">
     {location && condition && (

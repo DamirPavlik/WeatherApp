@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import { HistoryCard } from "../types";
+import { HistoryCardProps } from "../types";
 
-const HistoryCard: React.FC<HistoryCard> = ({
+const HistoryCard: React.FC<HistoryCardProps> = ({
   history,
   handleClear,
   handleRedirectHistory,

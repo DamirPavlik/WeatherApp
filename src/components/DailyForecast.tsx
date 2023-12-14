@@ -1,11 +1,7 @@
 import { Fragment } from "react";
-import { WeatherInfo } from "../types";
+import { DailyForecastProps } from "../types";
 
-const DailyForecast = ({
-  dailyData,
-}: {
-  dailyData: WeatherInfo["forecast"]["forecastday"];
-}) => {
+const DailyForecast: React.FC<DailyForecastProps> = ({ dailyData }) => {
   return (
     <div className="col-span-5">
       <div className="bg-[#eaecef] px-[30px] pt-[10px] drop-shadow-md rounded-md">
@@ -15,11 +11,8 @@ const DailyForecast = ({
         <hr className="bg-[#cbcfd5] h-[3px] mb-[20px]" />
         {dailyData.map((day, idx, dailyData) => {
           return (
-            <Fragment>
-              <div
-                key={idx}
-                className="w-100 py-6 flex justify-between items-center px-3"
-              >
+            <div key={idx}>
+              <div className="w-100 py-6 flex justify-between items-center px-3">
                 <div>
                   <p className="text-[#9399a2]">
                     {new Date(day.date).toLocaleDateString("en-EN", {
@@ -46,7 +39,7 @@ const DailyForecast = ({
               {idx === dailyData.length - 1 ? null : (
                 <hr className="bg-[#cbcfd5] h-[2px] " />
               )}
-            </Fragment>
+            </div>
           );
         })}
       </div>
