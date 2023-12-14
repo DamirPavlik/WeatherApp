@@ -1,20 +1,14 @@
 import CurrentWeather from "./CurrentWeather";
 import DailyForecast from "./DailyForecast";
 import HourlyForecast from "./HourlyForecast";
-import { WeatherInfo, Place } from "../types";
+import { PlaceProps } from "../types";
 
-const Place = ({ weatherData, error }: Place) => {
-  let findHourlyData = (
-    weatherData: WeatherInfo | undefined
-  ): { time: string; temp_c: number }[] => {
-    const currentDate = new Date().toISOString().split("T")[0];
-    const hourlyData =
-      weatherData?.forecast.forecastday.find((day) => day.date === currentDate)
-        ?.day.hour || [];
-    return hourlyData as { time: string; temp_c: number }[];
-  };
-
-  const hourlyData = findHourlyData(weatherData);
+const Place = ({ weatherData, error }: PlaceProps) => {
+  const curDay = new Date().toISOString().split("T")[0];
+  const findDay = weatherData?.forecast.forecastday.find(
+    (day) => day.date === curDay
+  );
+  const hourlyData = findDay?.hour.filter((_, i) => i % 3 === 2);
 
   return (
     <div>

@@ -1,17 +1,15 @@
+import React from "react";
 import { WeatherInfo } from "../types";
 
-const HourlyForecast = ({
-  hourlyData,
-}: {
-  hourlyData: WeatherInfo["forecast"]["forecastday"][0]["day"]["hour"];
-}) => (
-  <div>
-    {hourlyData.map((h, idx) => (
-      <div key={idx}>
-        {h.time}: {h.temp_c}°
-      </div>
-    ))}
-  </div>
-);
+const HourlyForecast: React.FC<any> = ({ hourlyData }) => {
+  console.log(hourlyData);
+  return (
+    <>
+      {hourlyData.map((hour: any) => (
+        <div>{hour.time}</div>
+      ))}
+    </>
+  );
+};
 
 export default HourlyForecast;

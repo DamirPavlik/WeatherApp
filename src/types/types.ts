@@ -39,16 +39,24 @@ export type WeatherInfo = {
             temp_c: number;
           }[];
         };
+        hour: Array<{
+          time: string;
+          temp_c: number;
+          condition: {
+            icon: string;
+            text: string;
+          }
+        }>
       }>;
     };
 }
 
-export type Place =  {
+export type PlaceProps =  {
     weatherData: WeatherInfo | undefined;
     error: string | null;
 }
 
-export interface HistoryCard {
+export interface HistoryCardProps {
     history: string[];
     handleClear: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     handleRedirectHistory: (
@@ -73,3 +81,14 @@ export type FormProps = {
     handleSearchClick: (city: SearchData) => void;
     handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
+
+export type CurrentWeatherProps = {
+  location: WeatherInfo["location"];
+  condition: WeatherInfo["current"]["condition"];
+  temp_c: number;
+  icon: string;
+}
+
+export type DailyForecastProps = {
+  dailyData: WeatherInfo["forecast"]["forecastday"];
+}
