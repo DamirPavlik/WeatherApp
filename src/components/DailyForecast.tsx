@@ -3,10 +3,10 @@ import { DailyForecastProps } from "../types";
 
 const DailyForecast: React.FC<DailyForecastProps> = ({ dailyData }) => {
   return (
-    <div className="col-span-5">
+    <Fragment>
       <div className="bg-[#eaecef] px-[30px] pt-[10px] drop-shadow-md rounded-md">
         <p className="mb-[20px] mt-[20px] text-[#202b3b]">
-          Forecast for the next 7 days
+          Forecast for the next 3 days
         </p>
         <hr className="bg-[#cbcfd5] h-[3px] mb-[20px]" />
         {dailyData.map((day, idx, dailyData) => {
@@ -43,7 +43,7 @@ const DailyForecast: React.FC<DailyForecastProps> = ({ dailyData }) => {
           );
         })}
       </div>
-    </div>
+    </Fragment>
   );
 };
 
