@@ -9,3 +9,34 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+/* Add this CSS to your stylesheets or inline styles */
+
+/* Scrollbar Track */
+::-webkit-scrollbar {
+  margin-top: 30px;
+
+  width: 8px; /* Set the width of the scrollbar */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #c2c4c6; /* Set the color of the scrollbar handle */
+  border-radius: 10px; /* Set the border radius of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c2c4c6;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px; /* Set the border radius of the scrollbar handle */
+  background: #f1f1f1; /* Set the color of the scrollbar track */
+}
+
+/* Handle when it's dragging */
+::-webkit-scrollbar-thumb:active {
+  background-color: #c2c4c6;
+}

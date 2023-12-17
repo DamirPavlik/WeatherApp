@@ -20,8 +20,10 @@ const HourlyForecast: React.FC<any> = ({ hourlyData }) => {
 
   return (
     <Fragment>
-      <div className="flex overflow-x-auto">
-        {hourlyData.map((hour: any) => {
+      <h4 className="text-xl ml-2 mb-4 font-bold">Hourly Forecast</h4>
+
+      <div className="flex overflow-x-auto bg-[#eaecef] rounded-xl py-7">
+        {hourlyData.map((hour: any, i: number) => {
           const formattedTime = new Date(hour.time).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -29,16 +31,22 @@ const HourlyForecast: React.FC<any> = ({ hourlyData }) => {
           const isCurTime = formattedTime === roundedTime;
           return (
             <div
-              className={`px-[30px] whitespace-nowrap ${formattedTime} ${
-                isCurTime ? "bg-red-400" : ""
-              }`}
+              className={`px-[50px] py-1  whitespace-nowrap text-center border-l-2 ${
+                i === 0 ? "" : "border-[#d8dbe0]"
+              } ${formattedTime} ${isCurTime ? "bg-[#dcdee1] rounded-md" : ""}`}
               key={hour.time}
               ref={isCurTime ? curTimeRef : null}
             >
-              <p>{formattedTime}</p>
-              <img src={hour.condition.icon} alt="" />
-              <p>{hour.condition.text}</p>
-              <h5>{hour.temp_c}</h5>
+              <p className="text-md text-[#202b3b]">{formattedTime}</p>
+              <img
+                src={hour.condition.icon}
+                alt=""
+                className="block mx-auto w-full"
+              />
+              <p className="text-[#9399a2]">{hour.condition.text}</p>
+              <h5 className="text-2xl text-[#202b3b] font-bold">
+                {hour.temp_c}°C
+              </h5>
             </div>
           );
         })}

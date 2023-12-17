@@ -8,7 +8,7 @@ const Place = ({ weatherData, error }: PlaceProps) => {
     <div>
       {weatherData ? (
         <div>
-          <div className="grid grid-cols-12 content-center gap-4 p-[30px]  mb-[200px]">
+          <div className="grid grid-cols-12 content-center gap-4 p-[30px]  mb-[110px]">
             <div className="col-span-7">
               <CurrentWeather
                 location={weatherData.location}
